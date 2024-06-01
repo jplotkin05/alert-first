@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert!</title>
+</head>
+<body>
+    <h1>Alert</h1>
+    <form method="POST">
+        <input type="hidden" id="userLat" name="userLat">
+        <input type="hidden" id="userLon" name="userLon">
+        <input type="submit" name="userCoords" value="Check My Location">
+    </form>
+    <p>
+       
+       
+    </p>
+    <!-- <h2>Status: {{statusDisplay}}</h2> -->
+    <pre style="width:fit-content;background-color:rgb(248, 247, 234);">
+{{contents['event']}}
+==========================================================================
+{{"Urgency: "+contents['urgency']}}
+{{contents['headline']}}
+
+{{contents['desc']}}
+
+<b>{{contents['instruction']}}</b>
+    </pre>
+</body>
+<script>
+    function getCoords(){
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(fetchLocal)
+        }
+    }
+    function fetchLocal(pos){
+        latInput = document.getElementById('userLat')
+        lonInput = document.getElementById('userLon')
+        latInput.setAttribute('value',pos.coords.latitude)
+        lonInput.setAttribute('value',pos.coords.longitude)
+        // console.log(pos.coords.latitude)
+
+    }
+    getCoords()
+
+    function setPageStyle(status){
+        if(status == true){
+            document.body.style.backgroundColor = "darkred"
+            console.log("ran")
+        }
+        if(status == false){
+            document.body.style.backgroundColor = "darkgreen"
+        }
+    }
+    setPageStyle({{statusDisplay}})
+</script>
+</html>
